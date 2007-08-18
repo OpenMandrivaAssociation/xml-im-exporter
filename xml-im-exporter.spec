@@ -43,9 +43,9 @@ Group:          Development/Java
 Source0:        xml-im-exporter1.1.tgz
 Patch0:         xml-im-exporter-build_xml.patch
 BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-junit
 BuildRequires:  jpackage-utils >= 0:1.6
-
-
+BuildRequires:  junit
 %if %{gcj_support}
 Requires(post):   java-gcj-compat
 Requires(postun): java-gcj-compat
@@ -85,7 +85,8 @@ find . -name "*.jar" -exec rm -f {} \;
   %{_bindir}/xargs -t %{__perl} -pi -e 's/\r$//g'
 
 %build
-
+export CLASSPATH="junit"
+export OPT_JAR_LIST="ant/ant-junit"
 %{ant} jar test javadocs
 
 
