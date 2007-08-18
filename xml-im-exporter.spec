@@ -35,7 +35,7 @@
 Summary:        XML Im-/Exporter
 Name:           xml-im-exporter
 Version:        1.1
-Release:        %mkrel 2.0.2
+Release:        %mkrel 2.0.3
 Epoch:          0
 License:        LGPL
 URL:            http://xml-im-exporter.sourceforge.net/
@@ -85,7 +85,7 @@ find . -name "*.jar" -exec rm -f {} \;
   %{_bindir}/xargs -t %{__perl} -pi -e 's/\r$//g'
 
 %build
-export CLASSPATH="junit"
+export CLASSPATH=$(build-classpath junit)
 export OPT_JAR_LIST="ant/ant-junit"
 %{ant} jar test javadocs
 
