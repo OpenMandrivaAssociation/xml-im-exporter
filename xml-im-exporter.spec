@@ -35,7 +35,7 @@
 Summary:        XML Im-/Exporter
 Name:           xml-im-exporter
 Version:        1.1
-Release:        %mkrel 2.0.4
+Release:        %mkrel 2.0.5
 Epoch:          0
 License:        LGPL
 URL:            http://xml-im-exporter.sourceforge.net/
@@ -44,7 +44,7 @@ Source0:        xml-im-exporter1.1.tgz
 Patch0:         xml-im-exporter-build_xml.patch
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  ant-junit
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  java-rpmbuild >= 0:1.6
 BuildRequires:  junit
 %if %{gcj_support}
 BuildRequires:    java-gcj-compat-devel
