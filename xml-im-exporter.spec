@@ -51,6 +51,7 @@ BuildRequires:    java-gcj-compat-devel
 %else
 BuildArch: noarch
 %endif
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 XML Im-/Exporter is a low level library to assist 
