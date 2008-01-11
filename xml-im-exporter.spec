@@ -35,7 +35,7 @@
 Summary:        XML Im-/Exporter
 Name:           xml-im-exporter
 Version:        1.1
-Release:        %mkrel 2.0.6
+Release:        %mkrel 2.0.7
 Epoch:          0
 License:        LGPL
 URL:            http://xml-im-exporter.sourceforge.net/
@@ -100,10 +100,10 @@ install -m 644 build/lib/%{name}%{version}.jar \
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 #poms
-%add_to_maven_depmap de.zeigermann.xml xml-im-exporter %{version} JPP/de.zeigermann.xml xml-im-exporter
+%add_to_maven_depmap de.zeigermann.xml xml-im-exporter %{version} JPP/ xml-im-exporter
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.xml-im-exporter.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-xml-im-exporter.pom
     
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
