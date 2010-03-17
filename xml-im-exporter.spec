@@ -35,7 +35,7 @@
 Summary:        XML Im-/Exporter
 Name:           xml-im-exporter
 Version:        1.1
-Release:        %mkrel 2.0.7
+Release:        %mkrel 2.0.8
 Epoch:          0
 License:        LGPL
 URL:            http://xml-im-exporter.sourceforge.net/
