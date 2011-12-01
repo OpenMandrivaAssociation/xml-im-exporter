@@ -90,41 +90,41 @@ export OPT_JAR_LIST="ant/ant-junit"
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 # jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -d -m 755 %{buildroot}%{_javadir}
 
 install -m 644 build/lib/%{name}%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+  %{buildroot}%{_javadir}/%{name}-%{version}.jar
+(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 #poms
 %add_to_maven_depmap de.zeigermann.xml xml-im-exporter %{version} JPP/ xml-im-exporter
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-xml-im-exporter.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP-xml-im-exporter.pom
     
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -pr doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 # docs
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-install -m 644 doc/index.html $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-install -m 644 *.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}
+install -m 644 doc/index.html %{buildroot}%{_docdir}/%{name}-%{version}
+install -m 644 *.txt %{buildroot}%{_docdir}/%{name}-%{version}
 
-%{__perl} -pi -e 's/\r$//g' $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/Copying.txt \
-$RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/**/**/**/*
+%{__perl} -pi -e 's/\r$//g' %{buildroot}%{_docdir}/%{name}-%{version}/Copying.txt \
+%{buildroot}%{_javadocdir}/%{name}-%{version}/**/**/**/*
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %update_maven_depmap
