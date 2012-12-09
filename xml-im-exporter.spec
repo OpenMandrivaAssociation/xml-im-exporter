@@ -35,7 +35,7 @@
 Summary:        XML Im-/Exporter
 Name:           xml-im-exporter
 Version:        1.1
-Release:        %mkrel 2.0.10
+Release:        2.1.3
 Epoch:          0
 License:        LGPL
 URL:            http://xml-im-exporter.sourceforge.net/
@@ -52,7 +52,6 @@ BuildRequires:    java-gcj-compat-devel
 %else
 BuildArch: noarch
 %endif
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 XML Im-/Exporter is a low level library to assist 
@@ -90,41 +89,36 @@ export OPT_JAR_LIST="ant/ant-junit"
 
 
 %install
-rm -rf %{buildroot}
-
 # jars
-install -d -m 755 %{buildroot}%{_javadir}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 
 install -m 644 build/lib/%{name}%{version}.jar \
-  %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
+(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
 
 #poms
 %add_to_maven_depmap de.zeigermann.xml xml-im-exporter %{version} JPP/ xml-im-exporter
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    %{buildroot}%{_datadir}/maven2/poms/JPP-xml-im-exporter.pom
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-xml-im-exporter.pom
     
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 # docs
-install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}
-install -m 644 doc/index.html %{buildroot}%{_docdir}/%{name}-%{version}
-install -m 644 *.txt %{buildroot}%{_docdir}/%{name}-%{version}
+install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 doc/index.html $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -m 644 *.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
-%{__perl} -pi -e 's/\r$//g' %{buildroot}%{_docdir}/%{name}-%{version}/Copying.txt \
-%{buildroot}%{_javadocdir}/%{name}-%{version}/**/**/**/*
+%{__perl} -pi -e 's/\r$//g' $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/Copying.txt \
+$RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/**/**/**/*
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
 %endif
-
-%clean
-rm -rf %{buildroot}
 
 %post
 %update_maven_depmap
@@ -148,10 +142,16 @@ rm -rf %{buildroot}
 %{_mavendepmapfragdir}
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
-%attr(-,root,root) %{_libdir}/gcj/%{name}/*
+%{_libdir}/gcj/%{name}/*
 %endif
 
 %files javadoc
 %defattr(0644,root,root,0755)
 %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
+
+
+%changelog
+* Sat Dec 04 2010 Oden Eriksson <oeriksson@mandriva.com> 0:1.1-2.0.9mdv2011.0
++ Revision: 608222
+- rebuild
